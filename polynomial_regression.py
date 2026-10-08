@@ -1,21 +1,9 @@
+""""
+Machine Learning Assignment 1
+Name: Srijan Gupta
+Roll Number: BT2024098
 """
-Machine Learning Assignment 1: Polynomial Regression
-Student Roll Number: BT2024098
-Course: Machine Learning
 
-This script performs the complete, leakage-free empirical workflow:
-1. 5-Fold Cross-Validation model selection across polynomial degrees.
-2. Regularizer comparison (Ridge, Lasso, ElasticNet).
-3. Regularization parameter (alpha) tuning.
-4. Feature importance / ablation analysis.
-5. Final model refitting on full training data.
-6. Test set inference and CSV deliverable generation (BT2024098_pred_var1.csv, BT2024098_pred_var2.csv).
-7. High-resolution diagnostic figures (new_degree_vs_metrics.png, new_alpha_audit.png,
-   new_actual_vs_predicted.png, new_residual_plots.png).
-8. Automated integrity verification.
-
-Engineered for fast, deterministic, leakage-safe execution (< 15 seconds).
-"""
 
 import sys
 import time
@@ -133,9 +121,7 @@ def main():
 
     v1_df = pd.DataFrame(v1_results).sort_values('cv_r2_mean', ascending=False).reset_index(drop=True)
 
-    # =========================================================================
     # 3. PHASE 2 (var2): THERMAL RESERVOIR MAPPING DEGREE SWEEP
-    # =========================================================================
     print("\n" + "-" * 75)
     print("PHASE 2 (var2): DEGREE SWEEP & REGULARIZATION SEARCH")
     print("-" * 75)
@@ -169,9 +155,7 @@ def main():
 
     v2_df = pd.DataFrame(v2_results).sort_values('cv_r2_mean', ascending=False).reset_index(drop=True)
 
-    # =========================================================================
     # 4. BEST MODEL SELECTION & VERIFICATION
-    # =========================================================================
     print("\n" + "=" * 75)
     print("BEST CONFIGURATION SELECTION")
     print("=" * 75)
@@ -189,9 +173,7 @@ def main():
     print(f"  5-Fold CV: R2 = {best_v2['cv_r2_mean']:.6f} +/- {best_v2['cv_r2_std']:.6f} | MSE = {best_v2['cv_mse_mean']:.6f} +/- {best_v2['cv_mse_std']:.6f}")
     print(f"  Full Train: R2 = {best_v2['train_r2']:.6f} | MSE = {best_v2['train_mse']:.6f}")
 
-    # =========================================================================
     # 5. FEATURE ABLATION / SENSITIVITY ANALYSIS
-    # =========================================================================
     print("\n" + "-" * 75)
     print("FEATURE ABLATION & SENSITIVITY ANALYSIS")
     print("-" * 75)
@@ -217,9 +199,8 @@ def main():
             delta = r['cv_r2_mean'] - best_v2['cv_r2_mean']
             print(f"  Coordinates ({', '.join(comb_names)}): CV R2 = {r['cv_r2_mean']:.6f} (Drop: {delta:+.6f})")
 
-    # =========================================================================
     # 6. FINAL MODEL FIT & PREDICTION GENERATION
-    # =========================================================================
+
     print("\n" + "-" * 75)
     print("GENERATING TEST SET SUBMISSIONS")
     print("-" * 75)
@@ -263,9 +244,7 @@ def main():
         assert np.isfinite(chk['y'].values).all(), f"Contains non-finite values in {fname}"
         print(f"  [PASS] {fname}: 1,000 rows, range=[{chk['y'].min():.2f}, {chk['y'].max():.2f}]")
 
-    # =========================================================================
     # 7. HIGH-RESOLUTION DIAGNOSTIC PLOTS
-    # =========================================================================
     print("\n" + "-" * 75)
     print("SAVING DIAGNOSTIC FIGURES")
     print("-" * 75)
